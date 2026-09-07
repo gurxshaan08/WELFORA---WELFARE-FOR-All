@@ -104,14 +104,9 @@ export const Navbar = () => {
           </a>
 
           {isAuthenticated && (
-            <>
-              <NavLink to="/saved" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
-                Saved
-              </NavLink>
-              <NavLink to="/assistant" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
-                AI Assistant
-              </NavLink>
-            </>
+            <NavLink to="/saved" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
+              Saved
+            </NavLink>
           )}
         </nav>
 
@@ -119,7 +114,7 @@ export const Navbar = () => {
         <div className="nav-auth">
           {isAuthenticated ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <Link to="/profile">
+              <Link to="/profile" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="secondary" size="sm">
                   Profile
                 </Button>
@@ -130,10 +125,10 @@ export const Navbar = () => {
             </div>
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <Link to="/login">
+              <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="secondary" size="sm">Log In</Button>
               </Link>
-              <Link to="/schemes">
+              <Link to="/schemes" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="primary" size="sm">
                   Find My Benefits
                 </Button>

@@ -21,22 +21,34 @@ export const SCHEME_CATEGORIES = [
 export const INDIAN_STATES = [
   "All States",
   "Andhra Pradesh",
+  "Arunachal Pradesh",
   "Assam",
   "Bihar",
-  "Delhi",
+  "Chhattisgarh",
+  "Goa",
   "Gujarat",
   "Haryana",
+  "Himachal Pradesh",
+  "Jharkhand",
   "Karnataka",
   "Kerala",
   "Madhya Pradesh",
   "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
   "Odisha",
   "Punjab",
   "Rajasthan",
+  "Sikkim",
   "Tamil Nadu",
   "Telangana",
+  "Tripura",
   "Uttar Pradesh",
-  "West Bengal"
+  "Uttarakhand",
+  "West Bengal",
+  "Delhi"
 ];
 
 export const mockSchemes = [

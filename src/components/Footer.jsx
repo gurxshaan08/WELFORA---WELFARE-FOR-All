@@ -54,7 +54,6 @@ export const Footer = () => {
             <h4 className="footer-col-title">Citizen Resources</h4>
             <ul className="footer-links">
               <li><Link to="/saved">Saved Schemes</Link></li>
-              <li><Link to="/assistant">AI Assistant</Link></li>
               <li><Link to="/profile">My Citizen Profile</Link></li>
               <li><Link to="/login">Account Login</Link></li>
             </ul>

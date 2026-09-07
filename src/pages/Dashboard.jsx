@@ -42,11 +42,6 @@ export const Dashboard = () => {
               Find My Benefits →
             </Button>
           </Link>
-          <Link to="/assistant">
-            <Button variant="accent">
-              Ask AI Assistant 🤖
-            </Button>
-          </Link>
         </div>
       </div>
 

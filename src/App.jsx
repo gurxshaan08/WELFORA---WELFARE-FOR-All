@@ -14,7 +14,6 @@ import { SchemeExplorerPage } from './pages/SchemeExplorerPage';
 import { SchemeDetailsPage } from './pages/SchemeDetailsPage';
 import { SavedSchemesPage } from './pages/SavedSchemesPage';
 import { ProfilePage } from './pages/ProfilePage';
-import { AIAssistant } from './pages/AIAssistant';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export function App() {
@@ -45,11 +44,6 @@ export function App() {
             <Route path="/profile" element={
               <ProtectedRoute>
                 <ProfilePage />
-              </ProtectedRoute>
-            } />
-            <Route path="/assistant" element={
-              <ProtectedRoute>
-                <AIAssistant />
               </ProtectedRoute>
             } />
 

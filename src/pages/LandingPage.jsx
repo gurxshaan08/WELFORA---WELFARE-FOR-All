@@ -127,16 +127,16 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* How Welfora Helps Section */}
+      {/* How Welfora Works Section */}
       <section id="how-it-works" style={{ padding: '4.5rem 0', backgroundColor: 'var(--neutral-100)' }}>
         <div className="container">
           <div className="section-header" style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 3rem' }}>
             <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
               Simple & Accessible
             </span>
-            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>How Welfora Helps</h2>
+            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>How Welfora Works</h2>
             <p className="section-subtitle">
-              Four clear steps to discover, understand, and apply for government welfare rights.
+              Find government schemes in a few simple steps.
             </p>
           </div>
 
@@ -146,34 +146,46 @@ export const LandingPage = () => {
             gap: '1.5rem'
           }}>
             <div className="step-card">
-              <div className="step-number">01</div>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Discover</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)' }}>
-                Find central and state government schemes organized in one simplified portal.
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <div className="step-number">01</div>
+                <span style={{ fontSize: '1.75rem' }}>👤</span>
+              </div>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Step 1 — Create Your Profile</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)', lineHeight: '1.5' }}>
+                Enter basic information such as your state, age group, occupation and other details.
               </p>
             </div>
 
             <div className="step-card">
-              <div className="step-number">02</div>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Match</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)' }}>
-                Get targeted scheme recommendations based on your age, state, income, and occupation.
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <div className="step-number">02</div>
+                <span style={{ fontSize: '1.75rem' }}>🧭</span>
+              </div>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Step 2 — Explore Schemes</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)', lineHeight: '1.5' }}>
+                Browse government schemes using categories, search and state filters.
               </p>
             </div>
 
             <div className="step-card">
-              <div className="step-number">03</div>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Understand</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)' }}>
-                See eligibility guidelines, financial benefits, and document checklists in plain language.
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <div className="step-number">03</div>
+                <span style={{ fontSize: '1.75rem' }}>🎯</span>
+              </div>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Step 3 — Check Eligibility</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)', lineHeight: '1.5' }}>
+                View the basic eligibility requirements and check whether a scheme may be suitable for you.
               </p>
             </div>
 
             <div className="step-card">
-              <div className="step-number">04</div>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Apply</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)' }}>
-                Follow step-by-step instructions to register online or visit local CSC centers.
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <div className="step-number">04</div>
+                <span style={{ fontSize: '1.75rem' }}>📋</span>
+              </div>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Step 4 — View Scheme Details</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)', lineHeight: '1.5' }}>
+                Read important information such as benefits, eligibility, required documents and application details.
               </p>
             </div>
           </div>
@@ -370,8 +382,8 @@ export const LandingPage = () => {
                 <div style={{ fontSize: '0.95rem', color: 'var(--neutral-300)', marginTop: '0.25rem' }}>Benefit Categories</div>
               </div>
               <div>
-                <div style={{ fontSize: '2.75rem', fontWeight: '800', color: 'var(--accent-600)', fontFamily: 'var(--font-heading)' }}>15+</div>
-                <div style={{ fontSize: '0.95rem', color: 'var(--neutral-300)', marginTop: '0.25rem' }}>States in Demo Data</div>
+                <div style={{ fontSize: '2.75rem', fontWeight: '800', color: 'var(--accent-600)', fontFamily: 'var(--font-heading)' }}>28</div>
+                <div style={{ fontSize: '0.95rem', color: 'var(--neutral-300)', marginTop: '0.25rem' }}>Indian States</div>
               </div>
               <div>
                 <div style={{ fontSize: '2.75rem', fontWeight: '800', color: 'var(--accent-600)', fontFamily: 'var(--font-heading)' }}>24/7</div>
@@ -380,54 +392,7 @@ export const LandingPage = () => {
             </div>
 
             <div style={{ textAlign: 'center', marginTop: '2.5rem', fontSize: '0.8rem', color: 'var(--neutral-400)' }}>
-              * Prototype statistics — demonstration data for academic evaluation.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* AI Assistant CTA Section */}
-      <section style={{ padding: '4.5rem 0', backgroundColor: 'var(--neutral-100)' }}>
-        <div className="container">
-          <div className="card" style={{
-            backgroundColor: 'var(--primary-900)',
-            color: 'var(--white)',
-            padding: '3rem 2.5rem',
-            borderRadius: 'var(--radius-2xl)',
-            display: 'grid',
-            gridTemplateColumns: '1.2fr 0.8fr',
-            gap: '2.5rem',
-            alignItems: 'center'
-          }}>
-            <div>
-              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                NEED PERSONALIZED HELP?
-              </span>
-              <h2 style={{ fontSize: '2.25rem', color: 'var(--white)', marginTop: '0.5rem', marginBottom: '1rem' }}>
-                Not sure where to start?
-              </h2>
-              <p style={{ fontSize: '1.05rem', color: 'var(--neutral-300)', marginBottom: '1.75rem', lineHeight: '1.6' }}>
-                Tell Welfora about yourself and discover government benefits that may be relevant to you.
-              </p>
-              <Link to="/assistant">
-                <Button variant="primary" size="lg">
-                  Ask Welfora ✨
-                </Button>
-              </Link>
-            </div>
-
-            <div style={{ textAlign: 'center' }}>
-              <img
-                src={citizenImages.assistantBanner}
-                alt="Welfora Assistant Interface"
-                style={{
-                  width: '100%',
-                  maxHeight: '260px',
-                  objectFit: 'cover',
-                  borderRadius: 'var(--radius-xl)',
-                  border: '1px solid rgba(255,255,255,0.15)'
-                }}
-              />
+              * Unified civic-tech platform for scheme discovery across India.
             </div>
           </div>
         </div>
