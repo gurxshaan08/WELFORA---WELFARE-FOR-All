@@ -1,10 +1,10 @@
 // ============================================================================
 // WELFORA MOCK DATASET - GOVERNMENT SCHEMES
-// IMPORTANT: MOCK / DEMO DATA — NOT OFFICIAL GOVERNMENT DATA
+// ⚠️ IMPORTANT: Demo Preview • Sample Scheme Data
 // This dataset is created strictly for frontend prototype evaluation.
 // ============================================================================
 
-export const MOCK_DISCLAIMER = "MOCK / DEMO DATA — NOT OFFICIAL GOVERNMENT DATA";
+export const MOCK_DISCLAIMER = "Demo Preview • Sample Scheme Data";
 
 export const SCHEME_CATEGORIES = [
   "All Categories",
@@ -48,7 +48,11 @@ export const INDIAN_STATES = [
   "Uttar Pradesh",
   "Uttarakhand",
   "West Bengal",
-  "Delhi"
+  "Delhi",
+  "Jammu & Kashmir",
+  "Ladakh",
+  "Puducherry",
+  "Chandigarh"
 ];
 
 export const mockSchemes = [
@@ -58,6 +62,7 @@ export const mockSchemes = [
     shortDescription: "Direct financial support of ₹6,000 per year to small and marginal farmer families.",
     category: "Agriculture",
     state: "All States",
+    states: ["All"],
     benefit: "₹6,000 / year paid directly in 3 installments of ₹2,000 every 4 months.",
     eligibility: "Small and marginal landholder farmer families with cultivable land ownership up to 2 hectares.",
     eligibilityRules: {
@@ -67,6 +72,18 @@ export const mockSchemes = [
       occupations: ["Farmer", "Agriculture Worker", "Self-Employed"],
       educationLevels: ["Any"],
       genders: ["Any"]
+    },
+    target_age_min: 18,
+    target_age_max: 75,
+    eligible_gender: ["All"],
+    income_limit: 300000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://pmkisan.gov.in",
+    benefits: {
+      type: "Financial Grant",
+      amount: 6000,
+      description: "₹6,000 per year in 3 installments"
     },
     documents: [
       "Aadhaar Card",
@@ -83,6 +100,7 @@ export const mockSchemes = [
     shortDescription: "Financial assistance for post-secondary education to reduce dropout rates among backward category students.",
     category: "Education",
     state: "All States",
+    states: ["All"],
     benefit: "100% compulsory non-refundable fees covered + Monthly maintenance allowance up to ₹1,200.",
     eligibility: "Students belonging to SC/ST categories pursuing Higher Secondary, Diploma, UG or PG degrees with family income under ₹2,50,000/year.",
     eligibilityRules: {
@@ -92,6 +110,18 @@ export const mockSchemes = [
       occupations: ["Student"],
       educationLevels: ["High School", "Higher Secondary", "Undergraduate", "Postgraduate"],
       genders: ["Any"]
+    },
+    target_age_min: 15,
+    target_age_max: 30,
+    eligible_gender: ["All"],
+    income_limit: 250000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://scholarships.gov.in",
+    benefits: {
+      type: "Scholarship",
+      amount: 14400,
+      description: "Full fee waiver + ₹1,200/month maintenance"
     },
     documents: [
       "Caste Certificate",
@@ -109,6 +139,7 @@ export const mockSchemes = [
     shortDescription: "World's largest health assurance scheme offering cashless hospital treatment.",
     category: "Healthcare",
     state: "All States",
+    states: ["All"],
     benefit: "Health insurance cover of ₹5,00,000 per family per year for secondary and tertiary care hospitalization.",
     eligibility: "Families identified based on SECC 2011 deprivation criteria, informal sector workers, and low-income households.",
     eligibilityRules: {
@@ -118,6 +149,18 @@ export const mockSchemes = [
       occupations: ["Any"],
       educationLevels: ["Any"],
       genders: ["Any"]
+    },
+    target_age_min: 0,
+    target_age_max: 100,
+    eligible_gender: ["All"],
+    income_limit: 250000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://pmjay.gov.in",
+    benefits: {
+      type: "Health Insurance",
+      amount: 500000,
+      description: "₹5 Lakh health cover per family per year"
     },
     documents: [
       "Aadhaar Card",
@@ -133,6 +176,7 @@ export const mockSchemes = [
     shortDescription: "Credit Linked Subsidy and housing grant for affordable house purchase or construction.",
     category: "Housing",
     state: "All States",
+    states: ["All"],
     benefit: "Interest subsidy up to ₹2.67 Lakhs on home loans or upfront financial assistance of ₹1.5 Lakhs for home construction.",
     eligibility: "Economically Weaker Section (EWS) / Low Income Group (LIG) families who do not own a pucca house anywhere in India.",
     eligibilityRules: {
@@ -142,6 +186,18 @@ export const mockSchemes = [
       occupations: ["Any"],
       educationLevels: ["Any"],
       genders: ["Any"]
+    },
+    target_age_min: 21,
+    target_age_max: 70,
+    eligible_gender: ["All"],
+    income_limit: 600000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://pmaymis.gov.in",
+    benefits: {
+      type: "Housing Subsidy",
+      amount: 267000,
+      description: "Interest subsidy up to ₹2.67 Lakhs"
     },
     documents: [
       "Aadhaar Card of all family members",
@@ -158,6 +214,7 @@ export const mockSchemes = [
     shortDescription: "Legal guarantee of 100 days of wage employment per financial year for rural households.",
     category: "Employment",
     state: "All States",
+    states: ["All"],
     benefit: "Guaranteed minimum daily wage (₹220-₹350/day depending on state) for manual unskilled work.",
     eligibility: "Any adult member (18+ years) of a rural household willing to do public work manual labor.",
     eligibilityRules: {
@@ -167,6 +224,18 @@ export const mockSchemes = [
       occupations: ["Unemployed", "Agriculture Worker", "Daily Wage Worker", "Self-Employed"],
       educationLevels: ["Primary", "High School", "Illiterate", "Any"],
       genders: ["Any"]
+    },
+    target_age_min: 18,
+    target_age_max: 65,
+    eligible_gender: ["All"],
+    income_limit: 400000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://nrega.nic.in",
+    benefits: {
+      type: "Wage Employment",
+      amount: 35000,
+      description: "100 days wage guarantee @ ₹220–₹350/day"
     },
     documents: [
       "Job Card Registration Form",
@@ -183,6 +252,7 @@ export const mockSchemes = [
     shortDescription: "Financial grant for marriage of girls belonging to low-income SC/BC/EWS families.",
     category: "Women & Child Welfare",
     state: "Punjab",
+    states: ["Punjab"],
     benefit: "One-time financial grant of ₹51,000 directly transferred to bride's bank account.",
     eligibility: "Daughters of SC, BC, or Economically Weaker Section families residing in Punjab with annual income under ₹30,000.",
     eligibilityRules: {
@@ -192,6 +262,18 @@ export const mockSchemes = [
       occupations: ["Any"],
       educationLevels: ["Any"],
       genders: ["Female"]
+    },
+    target_age_min: 18,
+    target_age_max: 40,
+    eligible_gender: ["Female"],
+    income_limit: 50000,
+    scheme_type: "State Scheme",
+    status: "active",
+    application_url: "https://sswcd.punjab.gov.in",
+    benefits: {
+      type: "Marriage Grant",
+      amount: 51000,
+      description: "₹51,000 one-time grant for marriage"
     },
     documents: [
       "Punjab Domicile / Residence Certificate",
@@ -209,6 +291,7 @@ export const mockSchemes = [
     shortDescription: "Bank loans between ₹10 Lakhs and ₹1 Crore for setting up greenfield enterprises.",
     category: "Entrepreneurship",
     state: "All States",
+    states: ["All"],
     benefit: "Composite bank loan of ₹10 Lakhs to ₹1 Crore covering up to 75% of total project cost.",
     eligibility: "SC/ST and/or Woman entrepreneurs above 18 years of age setting up manufacturing, services or trading ventures.",
     eligibilityRules: {
@@ -218,6 +301,18 @@ export const mockSchemes = [
       occupations: ["Entrepreneur", "Self-Employed", "Business Owner", "Unemployed"],
       educationLevels: ["High School", "Higher Secondary", "Undergraduate", "Postgraduate"],
       genders: ["Female", "Any"]
+    },
+    target_age_min: 18,
+    target_age_max: 65,
+    eligible_gender: ["All"],
+    income_limit: 1500000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://standupmitra.in",
+    benefits: {
+      type: "Business Loan",
+      amount: 10000000,
+      description: "Loan ₹10L–₹1 Crore, 75% project cost"
     },
     documents: [
       "Aadhaar & PAN Card",
@@ -235,6 +330,7 @@ export const mockSchemes = [
     shortDescription: "Monthly pension for senior citizens belonging to Below Poverty Line (BPL) households.",
     category: "Senior Citizens",
     state: "All States",
+    states: ["All"],
     benefit: "Monthly pension of ₹500 to ₹1,000 depending on state top-up allowances.",
     eligibility: "Senior citizens aged 60 years and above who belong to a BPL household.",
     eligibilityRules: {
@@ -244,6 +340,18 @@ export const mockSchemes = [
       occupations: ["Retired", "Unemployed", "Senior Citizen"],
       educationLevels: ["Any"],
       genders: ["Any"]
+    },
+    target_age_min: 60,
+    target_age_max: 110,
+    eligible_gender: ["All"],
+    income_limit: 120000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://nsap.nic.in",
+    benefits: {
+      type: "Monthly Pension",
+      amount: 12000,
+      description: "₹500–₹1,000 per month pension"
     },
     documents: [
       "Age Proof Certificate (Aadhaar / Voter ID)",
@@ -260,6 +368,7 @@ export const mockSchemes = [
     shortDescription: "Collateral-free micro loans up to ₹10 Lakhs for non-corporate, non-farm small/micro enterprises.",
     category: "Entrepreneurship",
     state: "All States",
+    states: ["All"],
     benefit: "Collateral-free business loans under 3 categories: Shishu (up to ₹50k), Kishore (₹50k-₹5L), Tarun (₹5L-₹10L).",
     eligibility: "Small business owners, shopkeepers, artisans, fruit vendors, food stalls, and micro-manufacturers.",
     eligibilityRules: {
@@ -269,6 +378,18 @@ export const mockSchemes = [
       occupations: ["Self-Employed", "Entrepreneur", "Business Owner"],
       educationLevels: ["Any"],
       genders: ["Any"]
+    },
+    target_age_min: 18,
+    target_age_max: 65,
+    eligible_gender: ["All"],
+    income_limit: 1000000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://www.mudra.org.in",
+    benefits: {
+      type: "Micro Loan",
+      amount: 1000000,
+      description: "Collateral-free loan up to ₹10 Lakhs"
     },
     documents: [
       "Identity & Address Proof",
@@ -285,6 +406,7 @@ export const mockSchemes = [
     shortDescription: "High-interest government savings scheme dedicated for the girl child's education and marriage.",
     category: "Women & Child Welfare",
     state: "All States",
+    states: ["All"],
     benefit: "Attractive guaranteed interest rate (8.2% p.a.) + 100% Tax deduction under Section 80C.",
     eligibility: "Parents or legal guardians of a girl child below 10 years of age (maximum 2 girl children per family).",
     eligibilityRules: {
@@ -294,6 +416,18 @@ export const mockSchemes = [
       occupations: ["Any"],
       educationLevels: ["Any"],
       genders: ["Female"]
+    },
+    target_age_min: 0,
+    target_age_max: 10,
+    eligible_gender: ["Female"],
+    income_limit: 2000000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://www.indiapost.gov.in",
+    benefits: {
+      type: "Savings Scheme",
+      amount: 0,
+      description: "8.2% p.a. interest + 80C tax benefit"
     },
     documents: [
       "Girl Child Birth Certificate",
@@ -310,6 +444,7 @@ export const mockSchemes = [
     shortDescription: "End-to-end support for traditional artisans and craftspeople working with hands and tools.",
     category: "Employment",
     state: "All States",
+    states: ["All"],
     benefit: "PM Vishwakarma ID Card + ₹15,000 Toolkit Incentive + Collateral-free credit up to ₹3 Lakhs at 5% interest.",
     eligibility: "Traditional artisans across 18 trades (Carpenters, Blacksmiths, Goldsmiths, Potters, Tailors, Masons, etc.).",
     eligibilityRules: {
@@ -319,6 +454,18 @@ export const mockSchemes = [
       occupations: ["Self-Employed", "Artisan", "Craftsperson", "Daily Wage Worker"],
       educationLevels: ["Any"],
       genders: ["Any"]
+    },
+    target_age_min: 18,
+    target_age_max: 70,
+    eligible_gender: ["All"],
+    income_limit: 400000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://pmvishwakarma.gov.in",
+    benefits: {
+      type: "Skill Support + Credit",
+      amount: 315000,
+      description: "₹15,000 toolkit + ₹3L credit at 5% interest"
     },
     documents: [
       "Aadhaar Card",
@@ -335,6 +482,7 @@ export const mockSchemes = [
     shortDescription: "Free nutritious hot cooked meals for school children studying in government classes 1 to 8.",
     category: "Education",
     state: "All States",
+    states: ["All"],
     benefit: "Guaranteed daily free balanced meal at school with essential calories and micro-nutrients.",
     eligibility: "All children enrolled in Classes I to VIII in Government and Government-aided schools.",
     eligibilityRules: {
@@ -344,6 +492,18 @@ export const mockSchemes = [
       occupations: ["Student"],
       educationLevels: ["Primary", "Middle School"],
       genders: ["Any"]
+    },
+    target_age_min: 5,
+    target_age_max: 15,
+    eligible_gender: ["All"],
+    income_limit: 1000000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://pmposhan.education.gov.in",
+    benefits: {
+      type: "Free Meal",
+      amount: 0,
+      description: "Daily free nutritious meals at government school"
     },
     documents: [
       "School Enrollment ID / Student Admission Record"
@@ -357,6 +517,7 @@ export const mockSchemes = [
     shortDescription: "Financial assistance deposited at milestone stages of girl child's education in Delhi.",
     category: "Women & Child Welfare",
     state: "Delhi",
+    states: ["Delhi"],
     benefit: "Cumulative financial deposits up to ₹1,00,000 paid upon reaching 18 years of age and passing Class X/XII.",
     eligibility: "Girl children born in Delhi with family annual income not exceeding ₹1,00,000.",
     eligibilityRules: {
@@ -366,6 +527,18 @@ export const mockSchemes = [
       occupations: ["Student", "Any"],
       educationLevels: ["Any"],
       genders: ["Female"]
+    },
+    target_age_min: 0,
+    target_age_max: 18,
+    eligible_gender: ["Female"],
+    income_limit: 100000,
+    scheme_type: "State Scheme",
+    status: "active",
+    application_url: "https://wcddel.in",
+    benefits: {
+      type: "Financial Deposit",
+      amount: 100000,
+      description: "Up to ₹1,00,000 at education milestones"
     },
     documents: [
       "Delhi Residence Proof (minimum 3 years)",
@@ -382,6 +555,7 @@ export const mockSchemes = [
     shortDescription: "Financial grant for poor patients suffering from critical chronic diseases in Kerala.",
     category: "Healthcare",
     state: "Kerala",
+    states: ["Kerala"],
     benefit: "Financial assistance up to ₹2,00,000 for medical treatment of cancer, heart surgery, kidney illness, etc.",
     eligibility: "Low-income family patients residing in Kerala with annual household income below ₹3,00,000.",
     eligibilityRules: {
@@ -392,6 +566,18 @@ export const mockSchemes = [
       educationLevels: ["Any"],
       genders: ["Any"]
     },
+    target_age_min: 0,
+    target_age_max: 100,
+    eligible_gender: ["All"],
+    income_limit: 300000,
+    scheme_type: "State Scheme",
+    status: "active",
+    application_url: "https://www.kerala.gov.in",
+    benefits: {
+      type: "Medical Grant",
+      amount: 200000,
+      description: "Up to ₹2,00,000 for critical illness treatment"
+    },
     documents: [
       "Medical Certificate & Estimate from Government Hospital doctor",
       "Kerala Domicile Certificate",
@@ -399,6 +585,82 @@ export const mockSchemes = [
       "Aadhaar Card & Ration Card"
     ],
     applicationProcess: "Submit application form to the District Lottery Office or State Lotteries Directorate, Thiruvananthapuram.",
+    deadline: "Open All Year Round"
+  },
+  {
+    id: "nsp-merit-cum-means",
+    name: "Merit-cum-Means Scholarship for Minorities",
+    shortDescription: "Scholarship for meritorious students from minority communities pursuing professional/technical courses.",
+    category: "Education",
+    state: "All States",
+    states: ["All"],
+    benefit: "Course fee up to ₹20,000/year + maintenance allowance ₹10,000/year for hostellers.",
+    eligibility: "Minority community students (Muslim, Christian, Sikh, Buddhist, Jain, Parsi) scoring 50%+ in previous exam, family income below ₹2.5 Lakh.",
+    eligibilityRules: {
+      maxIncome: 250000,
+      minAge: 16,
+      maxAge: 30,
+      occupations: ["Student"],
+      educationLevels: ["Higher Secondary", "Undergraduate", "Postgraduate"],
+      genders: ["Any"]
+    },
+    target_age_min: 16,
+    target_age_max: 30,
+    eligible_gender: ["All"],
+    income_limit: 250000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://scholarships.gov.in",
+    benefits: {
+      type: "Scholarship",
+      amount: 30000,
+      description: "₹20,000 course fee + ₹10,000 maintenance"
+    },
+    documents: [
+      "Minority Community Certificate",
+      "Income Certificate",
+      "Mark Sheets of Previous Exam",
+      "Admission Letter of Current Course",
+      "Aadhaar Card & Bank Details"
+    ],
+    applicationProcess: "Apply through National Scholarship Portal (NSP) — scholarships.gov.in before the annual deadline.",
+    deadline: "2026-11-15"
+  },
+  {
+    id: "beti-bachao-beti-padhao",
+    name: "Beti Bachao Beti Padhao Scheme",
+    shortDescription: "Multi-sectoral campaign to address declining child sex ratio and promote girl child education.",
+    category: "Women & Child Welfare",
+    state: "All States",
+    states: ["All"],
+    benefit: "Financial incentives for girl enrollment and completion of secondary education. Support through Sukanya Samriddhi Yojana linkage.",
+    eligibility: "Girl children up to 10 years, with special focus on districts with low child sex ratio.",
+    eligibilityRules: {
+      maxIncome: 1500000,
+      minAge: 0,
+      maxAge: 10,
+      occupations: ["Any"],
+      educationLevels: ["Any"],
+      genders: ["Female"]
+    },
+    target_age_min: 0,
+    target_age_max: 10,
+    eligible_gender: ["Female"],
+    income_limit: 1500000,
+    scheme_type: "Central Scheme",
+    status: "active",
+    application_url: "https://wcd.nic.in",
+    benefits: {
+      type: "Education Support",
+      amount: 0,
+      description: "Education incentives + SSY account linkage"
+    },
+    documents: [
+      "Birth Certificate of Girl Child",
+      "Aadhaar Card of Parents",
+      "Address Proof"
+    ],
+    applicationProcess: "Contact local Anganwadi center or Women & Child Development office for registration and linkage.",
     deadline: "Open All Year Round"
   }
 ];

@@ -1,8 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { 
-  getStoredUser, 
-  setStoredUser, 
-  getStoredProfile, 
+import {
+  getStoredUser,
+  setStoredUser,
+  getStoredProfile,
   setStoredProfile,
   getStoredSavedSchemes,
   setStoredSavedSchemes
@@ -15,25 +15,39 @@ export const AuthProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
   const [savedSchemeIds, setSavedSchemeIds] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('welfora-theme') || 'light';
+  });
+
+  // Apply theme to HTML element
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('welfora-theme', theme);
+  }, [theme]);
 
   // Synchronize state with localStorage on mount
   useEffect(() => {
     const initialUser = getStoredUser();
     const initialProfile = getStoredProfile();
     const initialSaved = getStoredSavedSchemes();
-
     setUser(initialUser);
     setProfile(initialProfile);
     setSavedSchemeIds(initialSaved);
     setLoading(false);
   }, []);
 
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   // Login Handler (Simulated)
   const login = (email, password) => {
     const mockUser = {
-      name: email.split('@')[0].replace('.', ' '),
+      name: email.includes('@')
+        ? email.split('@')[0].replace('.', ' ')
+        : `User ${email.slice(-4)}`,
       email: email,
-      token: "simulated_jwt_token_12345"
+      token: 'simulated_jwt_token_12345'
     };
     setUser(mockUser);
     setStoredUser(mockUser);
@@ -41,24 +55,23 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Register Handler (Simulated)
-  const register = (name, email, password) => {
+  const register = (name, contact, password) => {
     const newUser = {
       name: name,
-      email: email,
-      token: "simulated_jwt_token_67890"
+      email: contact,
+      token: 'simulated_jwt_token_67890'
     };
     setUser(newUser);
     setStoredUser(newUser);
 
-    // Initialize custom profile
     const newProfile = {
       name: name,
       age: 20,
-      state: "Punjab",
-      occupation: "Student",
-      education: "Undergraduate",
+      state: 'Delhi',
+      occupation: 'Student',
+      education: 'Undergraduate',
       income: 200000,
-      gender: "Male"
+      gender: 'Male'
     };
     setProfile(newProfile);
     setStoredProfile(newProfile);
@@ -71,21 +84,18 @@ export const AuthProvider = ({ children }) => {
     setStoredUser(null);
   };
 
-  // Update Profile Attributes
+  // Update Profile
   const updateProfile = (updatedProfileData) => {
     setProfile(updatedProfileData);
     setStoredProfile(updatedProfileData);
   };
 
-  // Bookmark / Save Scheme Handler
+  // Bookmark / Save Scheme
   const toggleSaveScheme = (schemeId) => {
     setSavedSchemeIds((prevIds) => {
-      let updated;
-      if (prevIds.includes(schemeId)) {
-        updated = prevIds.filter(id => id !== schemeId);
-      } else {
-        updated = [...prevIds, schemeId];
-      }
+      const updated = prevIds.includes(schemeId)
+        ? prevIds.filter((id) => id !== schemeId)
+        : [...prevIds, schemeId];
       setStoredSavedSchemes(updated);
       return updated;
     });
@@ -97,6 +107,8 @@ export const AuthProvider = ({ children }) => {
     profile,
     savedSchemeIds,
     loading,
+    theme,
+    toggleTheme,
     login,
     register,
     logout,

@@ -1,402 +1,346 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { SchemeCard } from '../components/SchemeCard';
-import { mockSchemes } from '../data/mockSchemes';
+import { SchemeDetailsDrawer } from '../components/SchemeDetailsDrawer';
+import { LiveBenefitMatcher } from '../components/LiveBenefitMatcher';
+import { mockSchemes, SCHEME_CATEGORIES } from '../data/mockSchemes';
 import { useAuth } from '../hooks/useAuth';
-import { categoryImages, citizenImages } from '../utils/schemeImages';
+import { citizenImages, citizenFallbacks } from '../utils/schemeImages';
+import {
+  Sparkles,
+  ArrowRight,
+  ShieldCheck,
+  CheckCircle2,
+  Users,
+  Search,
+  ExternalLink,
+  ChevronRight,
+  HelpCircle,
+  FileText
+} from 'lucide-react';
+
+const CATEGORY_TABS = [
+  { name: 'Education', label: 'Education & Aid', icon: '🎓', color: '#2563eb', desc: 'Scholarships, fee waivers & girl child grants' },
+  { name: 'Healthcare', label: 'Healthcare & Insurance', icon: '🏥', color: '#0284c7', desc: 'Cashless hospital covers & wellness grants' },
+  { name: 'Agriculture', label: 'Agriculture & Farmers', icon: '🌾', color: '#16a34a', desc: 'PM-KISAN cash support, seed & crop insurance' },
+  { name: 'Women & Child Welfare', label: 'Women & Child', icon: '👩‍👧', color: '#ec4899', desc: 'Sukanya Samriddhi & SHG micro-credit' },
+  { name: 'Employment', label: 'Jobs & Skills', icon: '💼', color: '#f59e0b', desc: 'Skill India certification & MGNREGA wages' },
+  { name: 'Housing', label: 'Housing & Shelter', icon: '🏠', color: '#8b5cf6', desc: 'PMAY home loans & construction subsidy' },
+  { name: 'Senior Citizens', label: 'Senior Citizens', icon: '👴', color: '#d97706', desc: 'Old-age pension & medical equipment support' },
+  { name: 'Entrepreneurship', label: 'Business & MSME', icon: '🚀', color: '#0d9488', desc: 'Collateral-free MUDRA loans & enterprise credit' },
+];
 
 export const LandingPage = () => {
-  const { isAuthenticated, savedSchemeIds, toggleSaveScheme } = useAuth();
-  
-  // Top 6 featured schemes
-  const featuredSchemes = mockSchemes.slice(0, 6);
+  const { savedSchemeIds, toggleSaveScheme } = useAuth();
+  const navigate = useNavigate();
 
-  const categories = [
-    { title: "Education & Scholarships", icon: "🎓", desc: "Post-matric aid, tuition waivers, and student grants.", name: "Education", img: categoryImages.Education },
-    { title: "Healthcare & Insurance", icon: "🏥", desc: "Ayushman insurance, medical grants, and wellness support.", name: "Healthcare", img: categoryImages.Healthcare },
-    { title: "Agriculture & Farmers", icon: "🌾", desc: "PM-KISAN cash support, crop insurance, and equipment.", name: "Agriculture", img: categoryImages.Agriculture },
-    { title: "Employment & Skills", icon: "💼", desc: "Job guarantees, wage support, and craft toolkits.", name: "Employment", img: categoryImages.Employment },
-    { title: "Women & Child Welfare", icon: "👩‍👧", desc: "Sukanya savings, marriage support, and girl child aid.", name: "Women & Child Welfare", img: categoryImages["Women & Child Welfare"] },
-    { title: "Housing & Shelter", icon: "🏠", desc: "PM Awas interest subsidies and construction assistance.", name: "Housing", img: categoryImages.Housing },
-    { title: "Senior Citizens", icon: "👴", desc: "BPL pensions, elder care, and retirement benefits.", name: "Senior Citizens", img: categoryImages["Senior Citizens"] },
-    { title: "Entrepreneurship", icon: "🚀", desc: "Collateral-free MUDRA loans and Stand Up India credit.", name: "Entrepreneurship", img: categoryImages.Entrepreneurship }
-  ];
+  // Active Category for interactive compact view
+  const [selectedCategory, setSelectedCategory] = useState('Education');
+  // Selected scheme for Drawer
+  const [drawerScheme, setDrawerScheme] = useState(null);
 
-  const citizenGroups = [
-    { title: "Students", text: "Discover scholarships and education support.", img: citizenImages.students },
-    { title: "Farmers", text: "Explore agricultural assistance and subsidies.", img: citizenImages.farmers },
-    { title: "Women & Families", text: "Empowering women through financial & welfare programs.", img: citizenImages.womenFamilies },
-    { title: "Senior Citizens", text: "Access pension schemes and elder care support.", img: citizenImages.seniorCitizens },
-    { title: "Job Seekers", text: "Find employment and skill-development opportunities.", img: citizenImages.jobSeekers }
+  // Filter schemes based on selected category
+  const activeCategorySchemes = mockSchemes.filter(
+    (s) => s.category === selectedCategory
+  );
+
+  const citizenPersonas = [
+    { title: 'Students', text: 'Pre & Post-matric scholarships, merit aid, tuition waivers.', icon: '🎓', count: '3 Schemes' },
+    { title: 'Farmers', text: 'Direct cash DBT, crop insurance, fertilizer subsidies.', icon: '🌾', count: '3 Schemes' },
+    { title: 'Women & Families', text: 'Empowerment credit, child savings, maternal healthcare.', icon: '👩‍👧', count: '2 Schemes' },
+    { title: 'Senior Citizens', text: 'Guaranteed pension annuities, free geriatric care.', icon: '👴', count: '1 Scheme' },
+    { title: 'Small Business', text: 'Unsecured business loans, technology upgrade funds.', icon: '🚀', count: '2 Schemes' }
   ];
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="container hero-grid">
-          <div>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              backgroundColor: 'var(--accent-50)',
-              border: '1px solid var(--accent-100)',
-              color: 'var(--accent-700)',
-              padding: '0.4rem 0.9rem',
-              borderRadius: 'var(--radius-full)',
-              fontSize: '0.85rem',
-              fontWeight: 700,
-              marginBottom: '1.25rem'
-            }}>
-              🇮🇳 Unified Civic-Tech Discovery Platform
+    <div className="landing-page-wrapper">
+      {/* ── HERO SECTION WITH BOUNDARIES & LIVE BENEFIT MATCHER ── */}
+      <section className="hero-section-bordered">
+        <div className="container">
+          <div className="hero-framed-container">
+            {/* Left Narrative Column */}
+            <div className="hero-content-col">
+              <div className="hero-badge-pill">
+                <span className="badge-flag">🇮🇳</span>
+                <span>Unified Civic-Tech Discovery Platform</span>
+                <span className="badge-pulse-dot" />
+              </div>
+
+              <h1 className="hero-title">
+                Discover the benefits <br />
+                <span className="hero-highlight-gradient">you're eligible for</span>.
+              </h1>
+
+              <p className="hero-subtitle">
+                Welfora cuts through bureaucratic confusion across central and state ministries.
+                Verify personalized benefits, application checklists, and direct cash transfer eligibility in seconds.
+              </p>
+
+              <div className="hero-cta-group">
+                <Link to="/schemes" className="btn btn-primary btn-lg hero-cta-btn">
+                  <span>Find My Benefits</span>
+                  <ArrowRight size={17} />
+                </Link>
+                <Link to="/schemes" className="btn btn-secondary btn-lg hero-cta-btn">
+                  <span>Explore 14 Schemes</span>
+                </Link>
+              </div>
+
+              {/* Quick Trust Seals */}
+              <div className="hero-trust-bar">
+                <div className="trust-item">
+                  <CheckCircle2 size={14} className="trust-icon" />
+                  <span>100% Free Public Portal</span>
+                </div>
+                <div className="trust-item">
+                  <ShieldCheck size={14} className="trust-icon" />
+                  <span>Direct Benefit Transfer (DBT)</span>
+                </div>
+                <div className="trust-item">
+                  <Users size={14} className="trust-icon" />
+                  <span>Multi-Lingual Support</span>
+                </div>
+              </div>
             </div>
 
-            <h1 className="hero-title">
-              Discover the benefits <span className="highlight-orange">you're eligible for</span>.
-            </h1>
+            {/* Right Visual Column with LiveBenefitMatcher */}
+            <div className="hero-visual-col">
+              <div className="hero-visual-frame">
+                <img
+                  src={citizenImages.heroCitizen}
+                  alt="Indian Citizens and Community"
+                  className="hero-main-img"
+                  onError={(e) => {
+                    if (citizenFallbacks.heroCitizen && e.currentTarget.src !== citizenFallbacks.heroCitizen) {
+                      e.currentTarget.src = citizenFallbacks.heroCitizen;
+                    }
+                  }}
+                />
+                <div className="hero-img-overlay-tint" />
+              </div>
 
-            <p className="hero-subtitle">
-              Welfora removes the confusion around government schemes, scholarships, subsidies, and pensions. Discover personalized benefits with clear eligibility guidance.
+              {/* Live Animated Updating Benefit Matcher */}
+              <LiveBenefitMatcher />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CIVIC TRUST & STAT STRIP (CRISP BOUNDARY) ── */}
+      <section className="civic-stat-strip-section">
+        <div className="container">
+          <div className="civic-stat-grid">
+            <div className="stat-strip-item">
+              <span className="stat-num">14+</span>
+              <span className="stat-desc">Flagship Central & State Schemes</span>
+            </div>
+            <div className="stat-divider-line" />
+            <div className="stat-strip-item">
+              <span className="stat-num">8</span>
+              <span className="stat-desc">Welfare Citizen Categories</span>
+            </div>
+            <div className="stat-divider-line" />
+            <div className="stat-strip-item">
+              <span className="stat-num">28</span>
+              <span className="stat-desc">States & UTs Covered Across India</span>
+            </div>
+            <div className="stat-divider-line" />
+            <div className="stat-strip-item">
+              <span className="stat-num">₹10 Lakhs+</span>
+              <span className="stat-desc">Max Entitled Benefit Cap</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── COMPACT INTERACTIVE SCHEMES-BY-CATEGORY HUB ── */}
+      {/* "make the landing page look short and small open these when user click on these categoires" */}
+      <section className="compact-category-hub-section" id="categories-hub">
+        <div className="container">
+          <div className="section-header-compact">
+            <div className="header-eyebrow-tag">
+              <Sparkles size={13} />
+              <span>INTERACTIVE BENEFIT EXPLORER</span>
+            </div>
+            <h2 className="section-title">Explore Schemes by Category</h2>
+            <p className="section-subtitle">
+              Click any category below to instantly view eligible schemes without leaving this page.
             </p>
+          </div>
 
-            <div className="hero-cta">
-              <Link to="/schemes">
-                <Button variant="primary" size="lg">
-                  Find My Benefits →
-                </Button>
-              </Link>
-              <Link to="/schemes">
-                <Button variant="secondary" size="lg">
-                  Explore Schemes
-                </Button>
-              </Link>
+          {/* Interactive Category Selector Tabs */}
+          <div className="category-tabs-scroll-wrapper">
+            <div className="category-tabs-container">
+              {CATEGORY_TABS.map((tab) => {
+                const isSelected = selectedCategory === tab.name;
+                const count = mockSchemes.filter((s) => s.category === tab.name).length;
+                return (
+                  <button
+                    key={tab.name}
+                    type="button"
+                    className={`category-selector-tab ${isSelected ? 'selected' : ''}`}
+                    onClick={() => setSelectedCategory(tab.name)}
+                    style={{
+                      '--cat-accent-color': tab.color
+                    }}
+                  >
+                    <span className="tab-icon">{tab.icon}</span>
+                    <div className="tab-info">
+                      <span className="tab-label">{tab.label}</span>
+                      <span className="tab-count">{count} {count === 1 ? 'Scheme' : 'Schemes'}</span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Hero Visual Area with Floating Match Badge Card */}
-          <div style={{ position: 'relative' }}>
-            <img
-              src={citizenImages.heroCitizen}
-              alt="Indian Citizens and Community"
-              style={{
-                width: '100%',
-                height: '380px',
-                objectFit: 'cover',
-                borderRadius: 'var(--radius-2xl)',
-                boxShadow: 'var(--shadow-xl)',
-                border: '1px solid var(--neutral-200)'
-              }}
-            />
-
-            {/* Floating UI Match Badge Card */}
-            <div className="floating-match-card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '1.2rem' }}>🎯</span>
+          {/* Active Category Display Banner */}
+          {CATEGORY_TABS.find((t) => t.name === selectedCategory) && (
+            <div className="category-active-banner">
+              <div className="banner-left">
+                <span className="banner-icon">
+                  {CATEGORY_TABS.find((t) => t.name === selectedCategory)?.icon}
+                </span>
                 <div>
-                  <strong style={{ fontSize: '0.9rem', color: 'var(--primary-900)', display: 'block' }}>Your Benefit Match</strong>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--accent-600)', fontWeight: 700 }}>8 schemes found</span>
+                  <h3 className="banner-title">
+                    {CATEGORY_TABS.find((t) => t.name === selectedCategory)?.label}
+                  </h3>
+                  <p className="banner-desc">
+                    {CATEGORY_TABS.find((t) => t.name === selectedCategory)?.desc}
+                  </p>
                 </div>
               </div>
 
-              <div style={{ fontSize: '0.775rem', color: 'var(--neutral-600)', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>Education</span>
-                  <strong>3</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>Healthcare</span>
-                  <strong>2</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>Employment</span>
-                  <strong>2</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>Housing</span>
-                  <strong>1</strong>
-                </div>
-              </div>
-
-              <div style={{ marginTop: '0.5rem', paddingTop: '0.4rem', borderTop: '1px solid var(--neutral-200)', fontSize: '0.7rem', color: 'var(--neutral-500)', textAlign: 'center' }}>
-                <em>Prototype demo rule matcher</em>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How Welfora Works Section */}
-      <section id="how-it-works" style={{ padding: '4.5rem 0', backgroundColor: 'var(--neutral-100)' }}>
-        <div className="container">
-          <div className="section-header" style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 3rem' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              Simple & Accessible
-            </span>
-            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>How Welfora Works</h2>
-            <p className="section-subtitle">
-              Find government schemes in a few simple steps.
-            </p>
-          </div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '1.5rem'
-          }}>
-            <div className="step-card">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <div className="step-number">01</div>
-                <span style={{ fontSize: '1.75rem' }}>👤</span>
-              </div>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Step 1 — Create Your Profile</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)', lineHeight: '1.5' }}>
-                Enter basic information such as your state, age group, occupation and other details.
-              </p>
-            </div>
-
-            <div className="step-card">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <div className="step-number">02</div>
-                <span style={{ fontSize: '1.75rem' }}>🧭</span>
-              </div>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Step 2 — Explore Schemes</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)', lineHeight: '1.5' }}>
-                Browse government schemes using categories, search and state filters.
-              </p>
-            </div>
-
-            <div className="step-card">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <div className="step-number">03</div>
-                <span style={{ fontSize: '1.75rem' }}>🎯</span>
-              </div>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Step 3 — Check Eligibility</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)', lineHeight: '1.5' }}>
-                View the basic eligibility requirements and check whether a scheme may be suitable for you.
-              </p>
-            </div>
-
-            <div className="step-card">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <div className="step-number">04</div>
-                <span style={{ fontSize: '1.75rem' }}>📋</span>
-              </div>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Step 4 — View Scheme Details</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)', lineHeight: '1.5' }}>
-                Read important information such as benefits, eligibility, required documents and application details.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Explore By Category Visual Section */}
-      <section style={{ padding: '4.5rem 0', backgroundColor: 'var(--white)' }}>
-        <div className="container">
-          <div className="section-header" style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 3rem' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              Explore By Sector
-            </span>
-            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>Explore By Category</h2>
-            <p className="section-subtitle">
-              Browse government programs categorized across 8 primary citizen welfare domains.
-            </p>
-          </div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '1.5rem'
-          }}>
-            {categories.map((cat, idx) => (
-              <Link to={`/schemes?category=${encodeURIComponent(cat.name)}`} key={idx} style={{ textDecoration: 'none' }}>
-                <div className="category-visual-card">
-                  <div className="category-card-img-wrap">
-                    <img src={cat.img} alt={cat.title} className="category-card-img" loading="lazy" />
-                  </div>
-                  <div className="category-card-content">
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                        <span style={{ fontSize: '1.2rem' }}>{cat.icon}</span>
-                        <h3 style={{ fontSize: '1.1rem', color: 'var(--primary-900)' }}>{cat.title}</h3>
-                      </div>
-                      <p style={{ fontSize: '0.875rem', color: 'var(--neutral-600)', lineHeight: '1.45' }}>{cat.desc}</p>
-                    </div>
-                    <div style={{ marginTop: '1rem', fontSize: '0.875rem', fontWeight: 700, color: 'var(--accent-600)' }}>
-                      Explore →
-                    </div>
-                  </div>
-                </div>
+              <Link
+                to={`/schemes?category=${encodeURIComponent(selectedCategory)}`}
+                className="banner-explore-link"
+              >
+                <span>Full Category Filter in Explorer</span>
+                <ArrowRight size={14} />
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Schemes Section */}
-      <section style={{ padding: '4.5rem 0', backgroundColor: 'var(--neutral-100)' }}>
-        <div className="container">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem' }}>
-            <div>
-              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                VERIFIED WELFARE PROGRAMS
-              </span>
-              <h2 className="section-title" style={{ marginTop: '0.25rem' }}>Featured Schemes</h2>
             </div>
-            <Link to="/schemes">
-              <Button variant="primary">
-                Explore All 14 Schemes →
-              </Button>
-            </Link>
-          </div>
+          )}
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '1.75rem'
-          }}>
-            {featuredSchemes.map((scheme) => (
+          {/* Interactive Scheme Cards for the Selected Category */}
+          <div className="compact-schemes-grid">
+            {activeCategorySchemes.map((scheme) => (
               <SchemeCard
                 key={scheme.id}
                 scheme={scheme}
                 isSaved={savedSchemeIds.includes(scheme.id)}
                 onToggleSave={toggleSaveScheme}
+                onSelect={(selected) => setDrawerScheme(selected)}
                 showImage={true}
               />
             ))}
           </div>
+
+          <div className="hub-bottom-action">
+            <Link to="/schemes" className="btn btn-primary btn-md">
+              <span>View All 14 Schemes in Explorer</span>
+              <ArrowRight size={15} />
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Built For Every Citizen Section */}
-      <section style={{ padding: '4.5rem 0', backgroundColor: 'var(--white)' }}>
+      {/* ── HOW IT WORKS (COMPACT & FRAMED) ── */}
+      <section id="how-it-works" className="how-it-works-bordered">
         <div className="container">
-          <div className="section-header" style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 3rem' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              Human-Centered Inclusion
+          <div className="section-header-compact">
+            <span className="header-eyebrow-tag">
+              <CheckCircle2 size={13} />
+              <span>SIMPLE 4-STEP WORKFLOW</span>
             </span>
-            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>Built for Every Citizen</h2>
+            <h2 className="section-title">How Welfora Works</h2>
             <p className="section-subtitle">
-              Designed to serve students, farmers, families, senior citizens, and job seekers across India.
+              From discovering schemes to direct application checklist in under 2 minutes.
             </p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: '1.5rem'
-          }}>
-            {citizenGroups.map((grp, idx) => (
-              <div className="citizen-card" key={idx}>
-                <img src={grp.img} alt={grp.title} style={{ width: '100%', height: '170px', objectFit: 'cover' }} loading="lazy" />
-                <div style={{ padding: '1.25rem' }}>
-                  <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-900)', marginBottom: '0.35rem' }}>{grp.title}</h3>
-                  <p style={{ fontSize: '0.875rem', color: 'var(--neutral-600)', lineHeight: '1.45' }}>"{grp.text}"</p>
+          <div className="how-steps-grid">
+            <div className="how-step-card">
+              <div className="step-badge-row">
+                <span className="step-num-pill">01</span>
+                <span className="step-emoji">👤</span>
+              </div>
+              <h3 className="step-heading">Create Profile</h3>
+              <p className="step-description">
+                Input your state, age, occupation, and household income level.
+              </p>
+            </div>
+
+            <div className="how-step-card">
+              <div className="step-badge-row">
+                <span className="step-num-pill">02</span>
+                <span className="step-emoji">⚡</span>
+              </div>
+              <h3 className="step-heading">Auto-Evaluate</h3>
+              <p className="step-description">
+                Our eligibility engine matches official ministry criteria against your profile.
+              </p>
+            </div>
+
+            <div className="how-step-card">
+              <div className="step-badge-row">
+                <span className="step-num-pill">03</span>
+                <span className="step-emoji">📋</span>
+              </div>
+              <h3 className="step-heading">Review Checklist</h3>
+              <p className="step-description">
+                Inspect Aadhaar, BPL, income certificates, and required application docs.
+              </p>
+            </div>
+
+            <div className="how-step-card">
+              <div className="step-badge-row">
+                <span className="step-num-pill">04</span>
+                <span className="step-emoji">🚀</span>
+              </div>
+              <h3 className="step-heading">Direct Apply</h3>
+              <p className="step-description">
+                Follow verified official portal links to claim direct benefit transfers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CITIZEN PERSONA STRIP (COMPACT) ── */}
+      <section className="citizen-persona-section">
+        <div className="container">
+          <div className="persona-strip-container">
+            <div className="persona-strip-header">
+              <h3 className="persona-strip-title">Built For Every Citizen</h3>
+              <p className="persona-strip-desc">Dedicated programs categorized by citizen demographics</p>
+            </div>
+
+            <div className="persona-pills-row">
+              {citizenPersonas.map((p, i) => (
+                <div key={i} className="persona-box-card">
+                  <div className="persona-box-top">
+                    <span className="persona-box-icon">{p.icon}</span>
+                    <span className="persona-box-badge">{p.count}</span>
+                  </div>
+                  <h4 className="persona-box-name">{p.title}</h4>
+                  <p className="persona-box-text">{p.text}</p>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Welfora Section */}
-      <section style={{ padding: '4.5rem 0', backgroundColor: 'var(--neutral-100)' }}>
-        <div className="container">
-          <div className="section-header" style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 3rem' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              Civic Technology Purpose
-            </span>
-            <h2 className="section-title" style={{ marginTop: '0.5rem' }}>Why Welfora?</h2>
-            <p className="section-subtitle">
-              Why citizens and civic tech communities rely on Welfora for government benefits.
-            </p>
-          </div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '1.5rem'
-          }}>
-            <div className="card">
-              <div style={{ fontSize: '2.2rem', marginBottom: '0.75rem' }}>🌐</div>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>One Platform</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)' }}>
-                Government schemes from central and state ministries organized in one unified platform.
-              </p>
-            </div>
-
-            <div className="card">
-              <div style={{ fontSize: '2.2rem', marginBottom: '0.75rem' }}>💡</div>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Simple Language</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)' }}>
-                Complex legal text translated into easy eligibility guidelines and clear document checklists.
-              </p>
-            </div>
-
-            <div className="card">
-              <div style={{ fontSize: '2.2rem', marginBottom: '0.75rem' }}>🎯</div>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Personalized Discovery</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)' }}>
-                Targeted recommendations based on your age, state, occupation, and household income.
-              </p>
-            </div>
-
-            <div className="card">
-              <div style={{ fontSize: '2.2rem', marginBottom: '0.75rem' }}>📱</div>
-              <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--primary-900)' }}>Accessible</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--neutral-600)' }}>
-                Designed specifically for citizens with varying levels of digital literacy.
-              </p>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Welfora at a Glance (Impact Panel) */}
-      <section style={{ padding: '3.5rem 0', backgroundColor: 'var(--white)' }}>
-        <div className="container">
-          <div className="navy-card">
-            <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 2.5rem' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                Civic Platform Overview
-              </span>
-              <h2 style={{ fontSize: '2.25rem', color: 'var(--white)', marginTop: '0.5rem' }}>
-                Welfora at a Glance
-              </h2>
-            </div>
-
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '2rem',
-              textAlign: 'center'
-            }}>
-              <div>
-                <div style={{ fontSize: '2.75rem', fontWeight: '800', color: 'var(--accent-600)', fontFamily: 'var(--font-heading)' }}>120+</div>
-                <div style={{ fontSize: '0.95rem', color: 'var(--neutral-300)', marginTop: '0.25rem' }}>Demo Schemes</div>
-              </div>
-              <div>
-                <div style={{ fontSize: '2.75rem', fontWeight: '800', color: 'var(--accent-600)', fontFamily: 'var(--font-heading)' }}>8</div>
-                <div style={{ fontSize: '0.95rem', color: 'var(--neutral-300)', marginTop: '0.25rem' }}>Benefit Categories</div>
-              </div>
-              <div>
-                <div style={{ fontSize: '2.75rem', fontWeight: '800', color: 'var(--accent-600)', fontFamily: 'var(--font-heading)' }}>28</div>
-                <div style={{ fontSize: '0.95rem', color: 'var(--neutral-300)', marginTop: '0.25rem' }}>Indian States</div>
-              </div>
-              <div>
-                <div style={{ fontSize: '2.75rem', fontWeight: '800', color: 'var(--accent-600)', fontFamily: 'var(--font-heading)' }}>24/7</div>
-                <div style={{ fontSize: '0.95rem', color: 'var(--neutral-300)', marginTop: '0.25rem' }}>Digital Assistance</div>
-              </div>
-            </div>
-
-            <div style={{ textAlign: 'center', marginTop: '2.5rem', fontSize: '0.8rem', color: 'var(--neutral-400)' }}>
-              * Unified civic-tech platform for scheme discovery across India.
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Scheme Details Slide-Over Drawer */}
+      <SchemeDetailsDrawer
+        scheme={drawerScheme}
+        isOpen={Boolean(drawerScheme)}
+        onClose={() => setDrawerScheme(null)}
+        isSaved={drawerScheme ? savedSchemeIds.includes(drawerScheme.id) : false}
+        onToggleSave={toggleSaveScheme}
+      />
     </div>
   );
 };

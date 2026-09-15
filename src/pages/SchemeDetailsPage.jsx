@@ -3,6 +3,21 @@ import { useParams, Link } from 'react-router-dom';
 import { mockSchemes, MOCK_DISCLAIMER } from '../data/mockSchemes';
 import { useAuth } from '../hooks/useAuth';
 import { Button } from '../components/Button';
+import { getSchemeImage, categoryFallbacks, getFallbackSvg } from '../utils/schemeImages';
+
+const getCategoryClass = (category) => {
+  switch (category) {
+    case 'Education': return 'category-education';
+    case 'Healthcare': return 'category-healthcare';
+    case 'Agriculture': return 'category-agriculture';
+    case 'Women & Child Welfare': return 'category-women';
+    case 'Employment': return 'category-employment';
+    case 'Housing': return 'category-housing';
+    case 'Senior Citizens': return 'category-senior';
+    case 'Entrepreneurship': return 'category-entrepreneurship';
+    default: return 'category-education';
+  }
+};
 
 export const SchemeDetailsPage = () => {
   const { id } = useParams();
@@ -37,9 +52,33 @@ export const SchemeDetailsPage = () => {
 
       {/* Main Details Card Container */}
       <div className="card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-2xl)' }}>
+        {/* Category Image Banner */}
+        <div style={{
+          width: '100%',
+          height: '240px',
+          borderRadius: 'var(--radius-xl)',
+          overflow: 'hidden',
+          marginBottom: '2rem',
+          boxShadow: 'var(--shadow-sm)'
+        }}>
+          <img
+            src={getSchemeImage(scheme.category)}
+            alt={scheme.name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            onError={(e) => {
+              const fallback = categoryFallbacks[scheme.category];
+              if (fallback && e.currentTarget.src !== fallback) {
+                e.currentTarget.src = fallback;
+              } else {
+                e.currentTarget.src = getFallbackSvg(scheme.category);
+              }
+            }}
+          />
+        </div>
+
         {/* Header Badges */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
-          <span className="category-badge category-education" style={{ fontSize: '0.85rem' }}>
+          <span className={`category-badge ${getCategoryClass(scheme.category)}`} style={{ fontSize: '0.85rem' }}>
             {scheme.category}
           </span>
           <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--neutral-600)' }}>
