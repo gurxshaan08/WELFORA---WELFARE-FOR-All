@@ -1,127 +1,208 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import { useEligibility } from '../hooks/useEligibility';
-import { StatCard } from '../components/StatCard';
-import { ProfileSummary } from '../components/ProfileSummary';
-import { SchemeCard } from '../components/SchemeCard';
-import { Button } from '../components/Button';
+import Metric from '../components/Metric';
+import QuickStat from '../components/QuickStat';
+import { categories } from '../data/categories';
+import { formatDaysRemaining } from '../utils/schemeUtils';
+import { useWelfora } from '../context/WelforaContext';
 
-export const Dashboard = () => {
-  const { user, profile, savedSchemeIds, toggleSaveScheme } = useAuth();
-  
-  // Custom Hook: Evaluates user profile against schemes
-  const { eligibleSchemes, totalMatchedCount } = useEligibility(profile);
+export default function Dashboard({ go, query, setQuery, setCategory }) {
+  const {
+    schemes,
+    saved,
+    applied,
+    profileName,
+    deadlineItems,
+    reminderPreferences,
+    setSelectedScheme,
+  } = useWelfora();
+
+  const recommended = [schemes[0], schemes[2], schemes[3], schemes[4]].filter(Boolean);
 
   return (
-    <div className="container main-content">
-      {/* Dashboard Header Greeting */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '1.25rem',
-        marginBottom: '2.5rem'
-      }}>
-        <div>
-          <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            CITIZEN DASHBOARD
-          </span>
-          <h1 className="section-title" style={{ marginTop: '0.2rem' }}>
-            Welcome back, {user?.name || profile?.name || 'User'} 👋
+    <section className="dashboard-content">
+      {/* Hero Banner */}
+      <div className="hero">
+        <div className="hero-copy">
+          <div className="hero-badge">
+            <span>◉</span> EMPOWERING CITIZENS, BUILDING A BETTER TOMORROW
+          </div>
+          <h1>
+            Find. Understand.<br />Apply. <span>Succeed.</span>
           </h1>
-          <p className="section-subtitle">
-            Personalized government scheme eligibility overview for your profile.
+          <p>
+            Discover government schemes you are eligible for, understand them in simple language, and get guidance at every step.
           </p>
+          <div className="hero-actions">
+            <button className="primary-btn" onClick={() => go('Eligibility Guide')}>
+              Find schemes you qualify for <span>→</span>
+            </button>
+            <button className="hero-secondary" onClick={() => go('Explore Schemes')}>
+              Explore schemes
+            </button>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.85rem' }}>
-          <Link to="/schemes">
-            <Button variant="primary">
-              Find My Benefits →
-            </Button>
-          </Link>
-        </div>
-      </div>
-
-      {/* Metrics Row & Profile Summary Layout */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: '1.75rem',
-        marginBottom: '3rem'
-      }}>
-        <ProfileSummary profile={profile} />
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <StatCard
-            title="Potentially Eligible Schemes"
-            value={`${totalMatchedCount} Schemes`}
-            icon="🎯"
-            theme="orange"
-          />
-          <StatCard
-            title="Saved Schemes Bookmarked"
-            value={`${savedSchemeIds.length} Saved`}
-            icon="⭐"
-            theme="navy"
-          />
-          <StatCard
-            title="Criteria Match Level"
-            value="High Relevance"
-            icon="📊"
-            theme="amber"
-          />
+        <div className="hero-art">
+          <div className="art-glow" />
+          <div className="building-grid">
+            <div className="building-dome" />
+            <div className="building-roof" />
+            <div className="building-top" />
+            <div className="building-columns">
+              {Array.from({ length: 7 }, (_, i) => <i key={i} />)}
+            </div>
+            <div className="building-base" />
+          </div>
+          <div className="art-orbit orbit-a" />
+          <div className="art-orbit orbit-b" />
+          <div className="float-tag tag-edu"><span>🎓</span> Scholarships</div>
+          <div className="float-tag tag-health"><span>✚</span> Healthcare</div>
+          <div className="float-tag tag-home"><span>⌂</span> Housing</div>
+          <div className="float-tag tag-money"><span>₹</span> Subsidies</div>
+          <div className="float-tag tag-aid"><span>♧</span> Financial aid</div>
         </div>
       </div>
 
-      {/* Recommended Schemes Section */}
-      <div className="section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-        <div>
-          <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-600)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            RULE MATCHED RECOMMENDATIONS
-          </span>
-          <h2 className="section-title" style={{ fontSize: '1.6rem', marginTop: '0.2rem' }}>
-            Recommended Schemes For You
-          </h2>
-          <p className="section-subtitle">
-            Based on your criteria ({profile?.state}, {profile?.occupation}, Income: ₹{Number(profile?.income).toLocaleString('en-IN')})
-          </p>
-        </div>
-        <Link to="/schemes">
-          <Button variant="outline" size="sm">Explore All Schemes →</Button>
-        </Link>
+      {/* Metrics Row */}
+      <div className="metric-row">
+        <Metric icon="♧" color="violet" value="1.2K+" label="Schemes Available" />
+        <Metric icon="◈" color="blue" value="28" label="States Covered" />
+        <Metric icon="♙" color="pink" value="3.5M+" label="Citizens Helped" />
+        <Metric icon="✓" color="mint" value="98%" label="User Satisfaction" />
       </div>
 
-      {eligibleSchemes.length > 0 ? (
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '1.75rem'
-        }}>
-          {eligibleSchemes.slice(0, 4).map(({ scheme, score }) => (
-            <SchemeCard
-              key={scheme.id}
-              scheme={scheme}
-              isSaved={savedSchemeIds.includes(scheme.id)}
-              onToggleSave={toggleSaveScheme}
-              matchScore={score}
+      {/* Welcome & Quick Stats */}
+      <div className="welcome-panel">
+        <div className="welcome-title">
+          <div>
+            <h2>
+              👋 Welcome back, <span>{profileName}!</span>
+            </h2>
+            <p>Here's what's happening today.</p>
+          </div>
+          <label className="searchbox welcome-search">
+            <span>⌕</span>
+            <input
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && go('Explore Schemes')}
+              placeholder="Search schemes, benefits..."
             />
+            <button onClick={() => go('Explore Schemes')}>↗</button>
+          </label>
+        </div>
+
+        <div className="quick-stats">
+          <QuickStat
+            icon="🎓"
+            title="Eligible Schemes"
+            number="12"
+            color="violet"
+            onClick={() => go('Recommended')}
+          />
+          <QuickStat
+            icon="▣"
+            title="Saved Schemes"
+            number={saved.length}
+            color="blue"
+            onClick={() => go('Saved Schemes')}
+          />
+          <QuickStat
+            icon="▤"
+            title="Applications in Progress"
+            number={applied.length}
+            color="mint"
+            onClick={() => go('My Applications')}
+          />
+          <QuickStat
+            icon="▣"
+            title="Upcoming Deadlines"
+            number={reminderPreferences.upcomingDeadlines ? deadlineItems.length : 0}
+            color="orange"
+            onClick={() => go('Deadlines')}
+          />
+        </div>
+      </div>
+
+      {/* Dashboard Lower Grid */}
+      <div className="dashboard-lower">
+        <div className="panel recommendation-panel">
+          <div className="panel-heading">
+            <h2>Top Recommended for You</h2>
+            <button onClick={() => go('Recommended')}>View all ↗</button>
+          </div>
+          {recommended.map(s => (
+            <button className="recommend-row" key={s.id} onClick={() => setSelectedScheme(s)}>
+              <span className={`scheme-symbol ${s.color}`}>{s.icon}</span>
+              <span className="recommend-name">
+                <b>{s.name}</b>
+                <i>
+                  <span style={{ width: `${s.match}%` }} />
+                </i>
+              </span>
+              <span className="match">{s.match}% match</span>
+              <span className="row-arrow">›</span>
+            </button>
           ))}
         </div>
-      ) : (
-        <div className="empty-state">
-          <div className="empty-icon">🔍</div>
-          <h3 className="empty-title">No Exact Rule Matches Found</h3>
-          <p className="empty-text">
-            Try adjusting your profile criteria or explore all available schemes in the explorer.
-          </p>
-          <Link to="/profile">
-            <Button variant="primary">Update Profile Criteria</Button>
-          </Link>
+
+        <div className="right-stack">
+          <div className="panel deadlines-panel">
+            <div className="panel-heading">
+              <h2>Upcoming Deadlines</h2>
+              <button onClick={() => go('Deadlines')}>View all ↗</button>
+            </div>
+            {(reminderPreferences.upcomingDeadlines ? deadlineItems.slice(0, 3) : []).map((s, i) => (
+              <button className="deadline-mini" key={s.id} onClick={() => setSelectedScheme(s)}>
+                <span className={`tiny-date ${['orange', 'pink', 'blue'][i] || 'blue'}`}>◷</span>
+                <b>{s.name}</b>
+                <span>{s.deadline}</span>
+                <i>{formatDaysRemaining(s.parsedDeadline)}</i>
+              </button>
+            ))}
+            {(!reminderPreferences.upcomingDeadlines || deadlineItems.length === 0) && (
+              <div className="deadline-empty-note">
+                No dated reminders shown. Check official notices for current dates.
+              </div>
+            )}
+          </div>
+
+          <button className="assistant-banner" onClick={() => go('AI Assistant')}>
+            <span className="assistant-mini">✦</span>
+            <span>
+              <b>Welfora Assistant</b>
+              <small>Ask about schemes, eligibility, documents...</small>
+            </span>
+            <span className="assistant-go">↗</span>
+          </button>
         </div>
-      )}
-    </div>
+      </div>
+
+      {/* Category Strip */}
+      <div className="category-strip">
+        <div className="panel-heading">
+          <div>
+            <h2>Explore by category</h2>
+            <p>Find support for what matters to you.</p>
+          </div>
+          <button onClick={() => go('Explore Schemes')}>All categories ↗</button>
+        </div>
+        <div className="category-tiles">
+          {categories.map(c => (
+            <button
+              className="category-tile"
+              key={c[0]}
+              onClick={() => {
+                setCategory(c[0]);
+                go('Explore Schemes');
+              }}
+            >
+              <span className={`category-icon ${c[3]}`}>{c[1]}</span>
+              <b>{c[0]}</b>
+              <small>{c[2]}</small>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
   );
-};
+}

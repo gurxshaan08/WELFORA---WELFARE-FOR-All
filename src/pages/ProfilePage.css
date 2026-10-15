@@ -1,0 +1,542 @@
+/* ==========================================================================
+   Profile Page Styles (Welfora Design System)
+   Maintains existing brand palette: --purple, --purple2, --cyan, --panel, etc.
+   ========================================================================== */
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   1. Profile Hero Summary Card
+   -------------------------------------------------------------------------- */
+.profile-hero-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(13, 25, 48, 0.85) 0%, rgba(10, 19, 37, 0.95) 100%);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-hero-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100%;
+  background: radial-gradient(circle at 100% 50%, rgba(140, 80, 255, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.profile-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-large-avatar {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--purple), var(--cyan));
+  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  box-shadow: 0 0 20px rgba(140, 80, 255, 0.4);
+  flex-shrink: 0;
+}
+
+.profile-hero-meta h2 {
+  margin: 0 0 4px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.profile-hero-meta p {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.profile-status-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.profile-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.profile-chip.chip-verified {
+  background: rgba(117, 230, 194, 0.12);
+  color: #75e6c2;
+  border: 1px solid rgba(117, 230, 194, 0.3);
+}
+
+.profile-chip.chip-role {
+  background: rgba(140, 80, 255, 0.12);
+  color: #c2a6ff;
+  border: 1px solid rgba(140, 80, 255, 0.3);
+}
+
+.profile-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Shared Section Layout
+   -------------------------------------------------------------------------- */
+.profile-section-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.profile-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-icon-badge {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.section-icon-badge.icon-locked {
+  background: rgba(140, 80, 255, 0.14);
+  color: #c2a6ff;
+  border: 1px solid rgba(140, 80, 255, 0.3);
+}
+
+.section-icon-badge.icon-editable {
+  background: rgba(68, 216, 255, 0.14);
+  color: var(--cyan);
+  border: 1px solid rgba(68, 216, 255, 0.3);
+}
+
+.section-title-texts h3 {
+  margin: 0 0 4px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title-texts p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.lock-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: rgba(148, 164, 197, 0.12);
+  color: var(--muted);
+  border: 1px solid var(--line);
+  letter-spacing: 0.4px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Registration Details Grid (Non-Changeable / Locked)
+   -------------------------------------------------------------------------- */
+.locked-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.locked-field-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel2);
+  position: relative;
+  transition: border-color 0.2s ease;
+}
+
+.locked-field-card:hover {
+  border-color: rgba(140, 80, 255, 0.3);
+}
+
+.locked-field-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.field-lock-icon {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.locked-field-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  word-break: break-word;
+}
+
+/* Interests Chips Display */
+.interests-display-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel2);
+}
+
+.interests-display-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.interests-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.interest-locked-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(140, 80, 255, 0.12);
+  border: 1px solid rgba(140, 80, 255, 0.25);
+  color: #c2a6ff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.locked-disclaimer-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(140, 80, 255, 0.06);
+  border: 1px dashed rgba(140, 80, 255, 0.25);
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   4. Additional Details Section (Editable)
+   -------------------------------------------------------------------------- */
+.additional-details-view-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.additional-field-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel2);
+  transition: all 0.2s ease;
+}
+
+.additional-field-card:hover {
+  border-color: rgba(68, 216, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.additional-field-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.additional-field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.additional-field-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.additional-field-val.not-set {
+  color: var(--faint);
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* Editable Form Grid */
+.additional-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.additional-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.additional-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.additional-input-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.additional-input-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.additional-input-group select,
+.additional-input-group input,
+.additional-input-group textarea {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel2);
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.additional-input-group select:focus,
+.additional-input-group input:focus,
+.additional-input-group textarea:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 2px rgba(140, 80, 255, 0.2);
+}
+
+.additional-input-group textarea {
+  min-height: 72px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.additional-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+/* Buttons */
+.btn-save-additional {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #8450ff;
+  background: linear-gradient(105deg, #7847f6, #a044f5 62%, #4d9cff);
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(130, 69, 255, 0.28);
+  transition: all 0.2s ease;
+}
+
+.btn-save-additional:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(130, 69, 255, 0.4);
+}
+
+.btn-cancel-additional {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel-additional:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+.btn-edit-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(68, 216, 255, 0.35);
+  background: rgba(68, 216, 255, 0.1);
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-edit-trigger:hover {
+  background: rgba(68, 216, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   5. Light Theme Overrides
+   -------------------------------------------------------------------------- */
+.wf.light .profile-hero-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f7f9ff 100%);
+  border-color: #e0e5f8;
+  box-shadow: 0 4px 16px rgba(24, 35, 68, 0.05);
+}
+
+.wf.light .profile-section-panel {
+  background: #ffffff;
+  border-color: #e0e5f8;
+}
+
+.wf.light .locked-field-card,
+.wf.light .interests-display-block,
+.wf.light .additional-field-card {
+  background: #f8f9ff;
+  border-color: #e0e5f8;
+}
+
+.wf.light .locked-field-card:hover,
+.wf.light .additional-field-card:hover {
+  border-color: #ccd4f0;
+}
+
+.wf.light .additional-input-group select,
+.wf.light .additional-input-group input,
+.wf.light .additional-input-group textarea {
+  background: #ffffff;
+  border-color: #e0e5f8;
+}
+
+.wf.light .btn-edit-trigger {
+  background: rgba(38, 140, 191, 0.1);
+  border-color: rgba(38, 140, 191, 0.35);
+  color: #268cbf;
+}
+
+/* --------------------------------------------------------------------------
+   6. Responsive Adaptations
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .profile-hero-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-hero-actions {
+    width: 100%;
+  }
+
+  .profile-hero-actions button {
+    flex: 1;
+  }
+
+  .profile-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-edit-trigger {
+    width: 100%;
+    justify-content: center;
+  }
+}
